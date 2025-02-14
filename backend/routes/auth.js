@@ -4,14 +4,14 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
 
-// router.get('/users', async (req, res) => {
-//   res.send("hello world")
-// })
+router.get('/users', async (req, res) => {
+  res.status(200).json({ message: 'Hello World!' });
+})
 
 // Register a new user
 router.post('/register', async (req, res) => {
   const { firstName, lastName, username, password } = req.body;
-
+  console.log(req.body)
   try {
     const user = new User({ firstName, lastName, username, password });
     await user.save();
@@ -24,7 +24,7 @@ router.post('/register', async (req, res) => {
 // Login
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
-
+  console.log(req.body)
   try {
     const user = await User.findOne({ username });
     if (!user) {
@@ -56,6 +56,7 @@ router.post('/forgot-password', async (req, res) => {
     // In a real app, send a password reset email here
     res.json({ message: 'Password reset instructions sent to your email' });
   } catch (error) {
+
     res.status(400).json({ error: error.message });
   }
 });
